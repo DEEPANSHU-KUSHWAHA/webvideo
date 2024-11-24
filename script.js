@@ -27,7 +27,9 @@ navigator.mediaDevices.getUserMedia({ video: true, audio: true })
 
 function joinRoom() {
     const roomId = document.getElementById('roomId').value;
+    const username = document.getElementById('username').value;
     const roomRef = db.ref('rooms/' + roomId);
+    document.getElementById('uniqueId').innerText = `Your Unique ID: ${roomId}`;
 
     roomRef.on('value', snapshot => {
         const data = snapshot.val();
@@ -37,11 +39,19 @@ function joinRoom() {
     });
 
     // Logic to send signaling data
+    roomRef.set({
+        username: username,
+        // Add more signaling data here
+    });
+
+    console.log(`${username} joined room: ${roomId}`);
 }
 
 function joinRandomRoom() {
     const roomId = Math.random().toString(36).substring(2, 15);
+    const username = document.getElementById('username').value;
     const roomRef = db.ref('rooms/' + roomId);
+    document.getElementById('uniqueId').innerText = `Your Unique ID: ${roomId}`;
 
     roomRef.on('value', snapshot => {
         const data = snapshot.val();
@@ -50,5 +60,11 @@ function joinRandomRoom() {
         }
     });
 
-    console.log('Joining random room:', roomId);
+    // Logic to send signaling data
+    roomRef.set({
+        username: username,
+        // Add more signaling data here
+    });
+
+    console.log(`${username} joined random room: ${roomId}`);
 }
