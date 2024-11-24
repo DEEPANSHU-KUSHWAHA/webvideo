@@ -28,6 +28,14 @@ function startCamera() {
 }
 
 function showCreateRoomPopup() {
+    document.getElementById('popupTitle').innerText = 'Create Room';
+    document.getElementById('popupButton').setAttribute('onclick', 'createRoom()');
+    document.getElementById('popup').style.display = 'block';
+}
+
+function showJoinRoomPopup() {
+    document.getElementById('popupTitle').innerText = 'Join Room';
+    document.getElementById('popupButton').setAttribute('onclick', 'joinRoom()');
     document.getElementById('popup').style.display = 'block';
 }
 
@@ -37,7 +45,7 @@ function hidePopup() {
 
 function createRoom() {
     const roomId = Math.random().toString(36).substring(2, 15);
-    const username = document.getElementById('popupUsername').value;
+    const username = document.getElementById('popupInput').value;
     const userId = Math.random().toString(36).substring(2, 15);
     document.getElementById('roomId').value = roomId;
     document.getElementById('uniqueId').innerText = `Your Unique ID: ${userId}`;
@@ -68,4 +76,4 @@ function createRoom() {
 
     hidePopup();
     startCamera();
-    document.getElementById('uniqueId').innerHTML = `<a href="https://${location[_{{{CITATION{{{_1{](https://github.com/edsyang/blog/tree/2ce48a2788db8d4f4b5f5f5dc8c388799ea5c0c2/docs%2Fcourse%2Fvue%2F13-Vue.js-D.part%20four.md)
+    document.getElementById('uniqueId').innerHTML = `<a href="https://${location.hostname}?roomId=${roomId}&userId=${userId}">Share this link[_{{{CITATION{{{_1{](https://github.com/edsyang/blog/tree/2ce48a2788db8d4f4b5f5f5dc8c388799ea5c0c2/docs%2Fcourse%2Fvue%2F13-Vue.js-D.part%20four.md)
