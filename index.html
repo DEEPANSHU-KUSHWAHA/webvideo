@@ -10,11 +10,12 @@
     <h1>Live Video Chat</h1>
     <div class="video-container">
         <video id="localVideo" autoplay muted></video>
-        <video id="remoteVideo" autoplay></video>
+        <div id="remoteVideos"></div>
     </div>
     <div class="controls">
         <input type="text" id="username" placeholder="Enter your username">
         <input type="text" id="roomId" placeholder="Enter room ID">
+        <button onclick="createRoom()">Create Room</button>
         <button onclick="joinRoom()">Join Room</button>
         <button onclick="joinRandomRoom()">Join Random Room</button>
         <div id="uniqueId"></div>
