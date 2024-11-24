@@ -8,11 +8,17 @@
 </head>
 <body>
     <h1>Live Video Chat</h1>
-    <input type="text" id="roomId" placeholder="Enter room ID">
-    <button onclick="joinRoom()">Join Room</button>
-    <button onclick="joinRandomRoom()">Join Random Room</button>
-    <video id="localVideo" autoplay></video>
-    <video id="remoteVideo" autoplay></video>
+    <div class="video-container">
+        <video id="localVideo" autoplay muted></video>
+        <video id="remoteVideo" autoplay></video>
+    </div>
+    <div class="controls">
+        <input type="text" id="username" placeholder="Enter your username">
+        <input type="text" id="roomId" placeholder="Enter room ID">
+        <button onclick="joinRoom()">Join Room</button>
+        <button onclick="joinRandomRoom()">Join Random Room</button>
+        <div id="uniqueId"></div>
+    </div>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
     <script src="script.js"></script>
