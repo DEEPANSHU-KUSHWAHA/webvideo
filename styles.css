@@ -109,6 +109,10 @@ button:hover, .popup button:hover {
     cursor: pointer;
 }
 
+#popupRoomId {
+    display: none;
+}
+
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
