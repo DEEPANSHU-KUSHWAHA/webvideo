@@ -15,7 +15,7 @@
     <div class="controls">
         <button onclick="showCreateRoomPopup()">Create Room</button>
         <button onclick="showJoinRoomPopup()">Join Room</button>
-        <button onclick="joinRandomRoom()">Join Random Room</button>
+        <button onclick="showRandomRoomPopup()">Join Random Room</button>
         <div id="uniqueId"></div>
     </div>
     <div id="popup" class="popup">
@@ -23,6 +23,7 @@
             <span class="close" onclick="hidePopup()">&times;</span>
             <h2 id="popupTitle">Popup</h2>
             <input type="text" id="popupInput" placeholder="Enter your username">
+            <input type="text" id="popupRoomId" placeholder="Enter room ID" style="display:none;">
             <button id="popupButton" onclick="handlePopupAction()">OK</button>
         </div>
     </div>
