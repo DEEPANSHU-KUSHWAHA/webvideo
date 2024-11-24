@@ -13,15 +13,27 @@
         <div id="remoteVideos"></div>
     </div>
     <div class="controls">
-        <input type="text" id="username" placeholder="Enter your username">
-        <input type="text" id="roomId" placeholder="Enter room ID">
-        <button onclick="createRoom()">Create Room</button>
+        <button onclick="showCreateRoomPopup()">Create Room</button>
         <button onclick="joinRoom()">Join Room</button>
         <button onclick="joinRandomRoom()">Join Random Room</button>
         <div id="uniqueId"></div>
     </div>
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <span class="close" onclick="hidePopup()">&times;</span>
+            <h2>Create Room</h2>
+            <input type="text" id="popupUsername" placeholder="Enter your username">
+            <button onclick="createRoom()">Create</button>
+        </div>
+    </div>
+    <div class="chat-container">
+        <div id="chatBox" class="chat-box"></div>
+        <input type="text" id="chatInput" placeholder="Type a message">
+        <button onclick="sendMessage()">Send</button>
+    </div>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
     <script src="script.js"></script>
+    <script src="chat.js"></script>
 </body>
 </html>
