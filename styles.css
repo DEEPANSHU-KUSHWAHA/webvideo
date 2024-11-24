@@ -83,6 +83,50 @@ button:hover {
     animation: fadeIn 2s ease-in-out;
 }
 
+.popup {
+    display: none;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    color: #333;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    animation: fadeIn 0.5s;
+}
+
+.popup-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.close {
+    align-self: flex-end;
+    cursor: pointer;
+}
+
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.chat-box {
+    width: 80%;
+    height: 200px;
+    background: #333;
+    color: #fff;
+    padding: 10px;
+    border-radius: 10px;
+    overflow-y: scroll;
+    margin-bottom: 10px;
+}
+
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
