@@ -14,7 +14,6 @@ const db = firebase.database();
 const localVideo = document.getElementById('localVideo');
 const remoteVideosContainer = document.getElementById('remoteVideos');
 let localStream;
-let remoteStreams = {};
 let peerConnections = {};
 
 // Function to start the camera
@@ -38,13 +37,16 @@ function createPeerConnection(roomId, userId) {
     });
 
     peerConnection.ontrack = event => {
-        if (!remoteStreams[userId]) {
+        const [stream] = event.streams;
+        const existingVideo = document.getElementById(userId);
+        if (existingVideo) {
+            existingVideo.srcObject = stream;
+        } else {
             const remoteVideo = document.createElement('video');
             remoteVideo.id = userId;
             remoteVideo.autoplay = true;
-            remoteVideo.srcObject = event.streams[0];
+            remoteVideo.srcObject = stream;
             remoteVideosContainer.appendChild(remoteVideo);
-            remoteStreams[userId] = event.streams[0];
         }
     };
 
@@ -112,4 +114,16 @@ function createRoom() {
 
             peerConnection.createOffer().then(offer => {
                 peerConnection.setLocalDescription(offer);
-               [_{{{CITATION{{{_1{](https://github.com/edsyang/blog/tree/2ce48a2788db8d4f4b5f5f5dc8c388799ea5c0c2/docs%2Fcourse%2Fvue%2F13-Vue.js-D.part%20four.md)
+                db.ref(`rooms/${roomId}/offers`).push({
+                    userId: userId,
+                    offer: offer
+                });
+            });
+        }
+    });
+}
+
+function joinRoom() {
+    const roomId = document.getElementById('roomId').value;
+    const username = document.getElementById('username').value;
+    const userId = Math.random().toString(36).substring(2, [_{{{CITATION{{{_1{](https://github.com/edsyang/blog/tree/2ce48a2788db8d4f4b5f5f5dc8c388799ea5c0c2/docs%2Fcourse%2Fvue%2F13-Vue.js-D.part%20four.md)
