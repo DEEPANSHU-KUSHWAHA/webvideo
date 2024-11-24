@@ -12,9 +12,10 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
 const localVideo = document.getElementById('localVideo');
-const remoteVideo = document.getElementById('remoteVideo');
+const remoteVideosContainer = document.getElementById('remoteVideos');
 let localStream;
-let remoteStream;
+let remoteStreams = {};
+let peerConnections = {};
 
 // Function to start the camera
 function startCamera() {
@@ -28,49 +29,87 @@ function startCamera() {
         });
 }
 
-function joinRoom() {
-    const roomId = document.getElementById('roomId').value;
-    const username = document.getElementById('username').value;
-    const roomRef = db.ref('rooms/' + roomId);
-    document.getElementById('uniqueId').innerText = `Your Unique ID: ${roomId}`;
+function createPeerConnection(roomId, userId) {
+    const peerConnection = new RTCPeerConnection();
+    peerConnections[userId] = peerConnection;
 
-    roomRef.on('value', snapshot => {
+    localStream.getTracks().forEach(track => {
+        peerConnection.addTrack(track, localStream);
+    });
+
+    peerConnection.ontrack = event => {
+        if (!remoteStreams[userId]) {
+            const remoteVideo = document.createElement('video');
+            remoteVideo.id = userId;
+            remoteVideo.autoplay = true;
+            remoteVideo.srcObject = event.streams[0];
+            remoteVideosContainer.appendChild(remoteVideo);
+            remoteStreams[userId] = event.streams[0];
+        }
+    };
+
+    peerConnection.onicecandidate = event => {
+        if (event.candidate) {
+            db.ref(`rooms/${roomId}/candidates/${userId}`).push({
+                candidate: event.candidate
+            });
+        }
+    };
+
+    return peerConnection;
+}
+
+function handleSignaling(roomId, userId, peerConnection) {
+    db.ref(`rooms/${roomId}/offers`).on('child_added', snapshot => {
         const data = snapshot.val();
-        if (data) {
-            // Handle incoming signaling data
+        if (data.userId !== userId) {
+            peerConnection.setRemoteDescription(new RTCSessionDescription(data.offer));
+            peerConnection.createAnswer().then(answer => {
+                peerConnection.setLocalDescription(answer);
+                db.ref(`rooms/${roomId}/answers`).push({
+                    userId: userId,
+                    answer: answer
+                });
+            });
         }
     });
 
-    // Logic to send signaling data
-    roomRef.set({
-        username: username,
-        // Add more signaling data here
+    db.ref(`rooms/${roomId}/answers`).on('child_added', snapshot => {
+        const data = snapshot.val();
+        if (data.userId !== userId) {
+            peerConnection.setRemoteDescription(new RTCSessionDescription(data.answer));
+        }
     });
 
-    console.log(`${username} joined room: ${roomId}`);
+    db.ref(`rooms/${roomId}/candidates`).on('child_added', snapshot => {
+        const data = snapshot.val();
+        if (data.userId !== userId && data.candidate) {
+            peerConnection.addIceCandidate(new RTCIceCandidate(data.candidate));
+        }
+    });
 }
 
-function joinRandomRoom() {
+function createRoom() {
     const roomId = Math.random().toString(36).substring(2, 15);
     const username = document.getElementById('username').value;
+    const userId = Math.random().toString(36).substring(2, 15);
+    document.getElementById('roomId').value = roomId;
+    document.getElementById('uniqueId').innerText = `Your Unique ID: ${userId}`;
     const roomRef = db.ref('rooms/' + roomId);
-    document.getElementById('uniqueId').innerText = `Your Unique ID: ${roomId}`;
 
-    roomRef.on('value', snapshot => {
-        const data = snapshot.val();
-        if (data) {
-            // Handle incoming signaling data
-        }
-    });
-
-    // Logic to send signaling data
     roomRef.set({
-        username: username,
-        // Add more signaling data here
+        users: { [userId]: username }
     });
 
-    console.log(`${username} joined random room: ${roomId}`);
-}
+    const peerConnection = createPeerConnection(roomId, userId);
+    handleSignaling(roomId, userId, peerConnection);
 
-// Start the camera when the page loads
-window.onload = startCamera;
+    db.ref(`rooms/${roomId}/users`).on('child_added', snapshot => {
+        if (snapshot.key !== userId) {
+            const newUser = snapshot.key;
+            const newPeerConnection = createPeerConnection(roomId, newUser);
+            handleSignaling(roomId, newUser, newPeerConnection);
+
+            peerConnection.createOffer().then(offer => {
+                peerConnection.setLocalDescription(offer);
+               [_{{{CITATION{{{_1{](https://github.com/edsyang/blog/tree/2ce48a2788db8d4f4b5f5f5dc8c388799ea5c0c2/docs%2Fcourse%2Fvue%2F13-Vue.js-D.part%20four.md)
