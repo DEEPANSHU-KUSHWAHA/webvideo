@@ -1,7 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
 body {
     font-family: 'Poppins', sans-serif;
     background: linear-gradient(to right, #ff7e5f, #feb47b);
-    color: #333;
+    color: #fff;
     text-align: center;
     margin: 0;
     padding: 0;
@@ -50,6 +52,7 @@ input {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     font-size: 1em;
     outline: none;
+    width: calc(100% - 40px);
 }
 
 button {
@@ -64,6 +67,7 @@ button {
     transition: background 0.3s, box-shadow 0.3s;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     outline: none;
+    width: calc(100% - 40px);
 }
 
 button:hover {
