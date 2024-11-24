@@ -1,9 +1,74 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to right, #ff7e5f, #feb47b);
+    color: #333;
     text-align: center;
 }
+
+h1 {
+    margin-top: 20px;
+    font-size: 2em;
+    animation: fadeIn 2s;
+}
+
+.video-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+}
+
 video {
     width: 45%;
-    border: 1px solid #ddd;
+    border: 2px solid #fff;
+    border-radius: 10px;
     margin: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.5s;
+}
+
+video:hover {
+    transform: scale(1.1);
+}
+
+.controls {
+    margin-top: 20px;
+    animation: slideIn 1s;
+}
+
+input {
+    padding: 10px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+button {
+    padding: 10px 20px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ff7e5f;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #feb47b;
+}
+
+#uniqueId {
+    margin-top: 10px;
+    font-size: 1.2em;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from { transform: translateY(-20px); }
+    to { transform: translateY(0); }
 }
